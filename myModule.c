@@ -2,6 +2,9 @@
 
 #include <stdio.h> //depends on need
 
+/*==============================================================================
+============= C function to be called from C programming languange =============
+==============================================================================*/
 int Cfib(int n){
   if( n < 2)
     return n;
@@ -18,7 +21,7 @@ int luasBalok(int panjang, int lebar){
 }
 
 /*==============================================================================
-=================================== C function =================================
+======================= C function to called from python =======================
 ==============================================================================*/
 
 /*******************************************************************************
@@ -123,10 +126,10 @@ static PyObject* printParam_func(PyObject* self, PyObject* args, PyObject* kws){
                                   //character/characters coming before pipe (|) means mandatory.
                                   //but character/characters coming after pipe (|) means optional.
                                   //in this case, s (string) is mandatory but i (integer) and f (float) are optional.
-                          keywords, //daftar keyword yang bisa digunakan di python
-                          &nama,
-                          &umur,
-                          &tinggi //variable yang akan menampung nilai parameter. urutan hrus sesuai dg yg ada di keyword.
+                          keywords, //list of allowed keyword for python
+                          &nama,//variable for storing input value. order of variable must be match with order of keyword
+                          &umur,//variable for storing input value. order of variable must be match with order of keyword
+                          &tinggi //variable for storing input value. order of variable must be match with the order of keyword
                         ))
     return NULL;
 
@@ -143,15 +146,15 @@ static PyObject* printParam_func(PyObject* self, PyObject* args, PyObject* kws){
 static PyMethodDef myMethods[]={
   {
     "fib_c", // name that is used to call c function from python
-    fib, // c function's name
+    (PyCFunction)fib, // c function's name
     METH_VARARGS, //flag. this flag means that function takes input argument.
     "Calculates the fibonaci numbers." //description of c function.
   },
   {"version_c", (PyCFunction)version, METH_NOARGS, "return the version."},
   {"hello_c", (PyCFunction)hello_func, METH_NOARGS, "print \'hello world!\'"},
-  {"balok_c", balok_func, METH_VARARGS, "find area and volume"},
+  {"balok_c", (PyCFunction)balok_func, METH_VARARGS, "find area and volume"},
   {"param_c", (PyCFunction)printParam_func, METH_VARARGS | METH_KEYWORDS, "print paramenter from python in c"},
-  {NULL, NULL, 0, NULL} //terminate indication
+  {NULL} //terminate indication
 };
 
 static struct PyModuleDef myModule = {
