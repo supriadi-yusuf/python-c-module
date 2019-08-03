@@ -14,7 +14,7 @@ Steps :
    For example : just read file myModule.c in this directory.
 3. create setup.py in python3
    For example : just read file setup.py in this directory.
-4. run : python3 setup.py build or python3 setup.py install
+4. run : "python3 setup.py build" or "python3 setup.py install".
    if execution is successfull the directory named 'build' is created at
    your current directory.
    Look at [your current directory]/build/lib.linux-x86_64-3.6 directory.
